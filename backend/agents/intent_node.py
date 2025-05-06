@@ -36,10 +36,19 @@ def intent_parsing_node(state: ChatState) -> ChatState:
         cmd = call_chatgpt(messages).strip()
     except Exception:
         cmd = "none"
-    # Fallback: if parsing yields none, but user requests listing, default to current dir
+    # Fallback: if parsing yields none, handle common cases
     if cmd.lower() == "none":
         text = user_text.lower()
+        # Directory listing request without path
         if "파일 목록" in text or "list files" in text or text.startswith("list"):
-            cmd = f"list:."
+            cmd = "list:."
+        # Create file request: default to write with empty content
+        elif "생성" in text or "만들어" in text or "create" in text:
+            # extract a path-like substring as filename
+            import re
+            m = re.search(r"([\w\-\./]+)", user_text)
+            if m:
+                path = m.group(1)
+                cmd = f"write:{path}:"
     state["last_command"] = cmd
     return state
