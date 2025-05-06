@@ -7,7 +7,12 @@ def read_file(path: str) -> str:
 
 def write_file(path: str, content: str) -> None:
     """Write content to a file, creating it if necessary."""
-    Path(path).write_text(content)
+    # Ensure parent directory exists before writing
+    file_path = Path(path)
+    parent = file_path.parent
+    if parent and not parent.exists():
+        parent.mkdir(parents=True, exist_ok=True)
+    file_path.write_text(content)
 
 def delete_file(path: str) -> None:
     """Delete a file if it exists."""
