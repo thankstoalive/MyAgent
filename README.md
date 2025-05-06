@@ -137,3 +137,42 @@
 ---
 
 이제, OpenAI API 키 설정과 `llm_client` 코드부터 시작해 보시면 좋겠습니다. 추가 조정이나 궁금한 점 알려주세요!
+
+## 8. 실행 및 테스트
+
+아래 명령으로 백엔드와 프런트엔드를 실행하고, 기능을 검증할 수 있습니다.
+
+### 1) 백엔드 실행
+1. 가상환경 활성화 및 의존성 설치
+   ```bash
+   python3 -m venv .venv
+   source .venv/bin/activate
+   pip install -r requirements.txt
+   ```
+2. 환경변수 설정 (`.env` 파일 또는 export)
+   ```env
+   OPENAI_API_KEY=sk-<YOUR_KEY>
+   ```
+3. 서버 시작 (디폴트: http://127.0.0.1:8000)
+   ```bash
+   python -m uvicorn backend.app:app --reload
+   ```
+
+### 2) 프런트엔드 실행
+1. Node.js 환경에서 패키지 설치
+   ```bash
+   cd frontend
+   npm install    # 또는 yarn install
+   ```
+2. 개발 서버 시작 (http://localhost:5173)
+   ```bash
+   npm run dev    # 또는 yarn dev
+   ```
+
+### 3) 테스트 스크립트 실행
+프로젝트 루트에서 Python 테스트 클라이언트 사용
+```bash
+# venv가 활성화된 쉘에서
+python test_client.py
+```
+`test_client.py`가 차례대로 list, write, read, move, delete 기능을 호출하고 결과를 출력합니다.
