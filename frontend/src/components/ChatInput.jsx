@@ -12,15 +12,20 @@ export default function ChatInput({ onSend }) {
   };
 
   return (
-    <div className="chat-input">
+    <form
+      className="chat-input"
+      onSubmit={e => {
+        e.preventDefault();
+        send();
+      }}
+    >
       <input
         type="text"
         value={value}
         onChange={e => setValue(e.target.value)}
-        onKeyDown={e => e.key === 'Enter' && send()}
         placeholder="Type a message..."
       />
-      <button onClick={send}>Send</button>
-    </div>
+      <button type="submit">Send</button>
+    </form>
   );
 }
