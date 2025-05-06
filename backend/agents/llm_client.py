@@ -9,7 +9,7 @@ _client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def call_chatgpt(
     messages: List[Dict[str, str]],
-    model: str = "gpt-4",
+    model: str = "gpt-4o-mini",
     temperature: float = 0.2,
 ) -> str:
     """
