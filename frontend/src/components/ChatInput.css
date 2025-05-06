@@ -1,0 +1,20 @@
+.chat-input {
+  display: flex;
+  margin-top: 1rem;
+}
+.chat-input input {
+  flex: 1;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.chat-input button {
+  margin-left: 0.5rem;
+  border: none;
+  background-color: #0066cc;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+ .chat-input button:hover {
+  background-color: #005bb5;
+}
