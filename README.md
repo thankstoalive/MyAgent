@@ -1,7 +1,69 @@
 # MyAgent
 
-아래 내용은 본 프로젝트를 수행하기 위한 계획 및 가이드입니다.
-나중에 참고하여 다시 프로젝트를 진행할 수 있도록 정리했습니다.
+An AI-powered filesystem agent with a web-based chat interface, powered by OpenAI's gpt-4o-mini and LangGraph.
+
+## Features
+
+### Implemented
+- Backend service with FastAPI: `/chat/send`, `/chat/history` endpoints
+- LangGraph workflow: intent parsing, filesystem operations (list/read/write/delete/move), response generation
+- OpenAI integration: Python SDK v1 with model `gpt-4o-mini`
+- React + Vite frontend: chat UI with message list and input components
+- Automated E2E testing via `test_client.py`, manual testing via curl or Swagger UI
+
+### In Progress / To Do
+- Persistent storage for chat history (database)
+- User authentication and authorization
+- WebSocket real-time chat updates
+- Dockerization & CI/CD pipeline
+- End-to-end tests and monitoring
+
+## Getting Started
+
+### Prerequisites
+- Python 3.9+
+- Node.js 16+ and npm or yarn
+- Git
+
+### Backend Setup
+```bash
+git clone <repo-url>
+cd MyAgent
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+echo "OPENAI_API_KEY=sk-<YOUR_KEY>" > .env
+python -m uvicorn backend.app:app --reload
+```
+
+### Frontend Setup
+```bash
+cd frontend
+npm install       # or yarn install
+npm run dev       # or yarn dev
+# Open http://localhost:5173
+```
+
+### Testing
+With backend & frontend running:
+```bash
+source .venv/bin/activate
+python test_client.py
+```
+
+## Project Structure
+```
+MyAgent/
+├─ backend/
+├─ frontend/
+├─ data/
+├─ test_client.py
+├─ requirements.txt
+└─ README.md
+```
+
+---
+For issues or contributions, please open a GitHub issue or pull request.
 
 ## 1. 요구사항 정의
 
