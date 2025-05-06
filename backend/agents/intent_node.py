@@ -1,3 +1,4 @@
+import os
 from typing import Any, Dict
 from backend.models.chat_state import ChatState
 from backend.agents.llm_client import call_chatgpt
@@ -23,7 +24,8 @@ def intent_parsing_node(state: ChatState) -> ChatState:
         "write:/path/to/file:content_to_write\n"
         "delete:/path/to/file\n"
         "move:/src/path:/dst/path\n"
-        "If the request is not a filesystem operation, respond with 'none'."
+        "If the request is not a filesystem operation, respond with 'none'. "
+        "If the user requests a listing without specifying a path, assume the current directory '.' and return 'list:.'"
     )
     messages = [
         {"role": "system", "content": system_prompt},
@@ -32,7 +34,12 @@ def intent_parsing_node(state: ChatState) -> ChatState:
     # Call LLM to parse intent
     try:
         cmd = call_chatgpt(messages).strip()
-    except Exception as e:
+    except Exception:
         cmd = "none"
+    # Fallback: if parsing yields none, but user requests listing, default to current dir
+    if cmd.lower() == "none":
+        text = user_text.lower()
+        if "파일 목록" in text or "list files" in text or text.startswith("list"):
+            cmd = f"list:."
     state["last_command"] = cmd
     return state
