@@ -17,7 +17,8 @@ def intent_parsing_node(state: ChatState) -> ChatState:
     # Prepare LLM prompt to parse intent
     system_prompt = (
         "You are a parser that extracts filesystem commands from user requests. "
-        "Respond with a single command in one of these formats: \n"
+        "Respond with a single command in one of these formats:\n"
+        "list:/path/to/directory\n"
         "read:/path/to/file\n"
         "write:/path/to/file:content_to_write\n"
         "delete:/path/to/file\n"

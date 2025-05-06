@@ -1,3 +1,4 @@
+import os
 from typing import Any
 from backend.models.chat_state import ChatState
 from backend.agents.filesystem_agent import (
@@ -20,7 +21,18 @@ def execute_fs_node(state: ChatState) -> ChatState:
         parts = cmd.split(":")
         op = parts[0].lower()
         try:
-            if op == "read" and len(parts) >= 2:
+            if op == "list" and len(parts) >= 2:
+                # List directory contents
+                dir_path = parts[1]
+                try:
+                    entries = os.listdir(dir_path)
+                    if entries:
+                        output = f"Directory listing for '{dir_path}':\n" + "\n".join(entries)
+                    else:
+                        output = f"Directory '{dir_path}' is empty."
+                except Exception as list_err:
+                    output = f"Error listing directory '{dir_path}': {list_err}"
+            elif op == "read" and len(parts) >= 2:
                 content = read_file(parts[1])
                 output = f"Read file '{parts[1]}':\n{content}"
             elif op == "write" and len(parts) >= 3:
